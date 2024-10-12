@@ -17,4 +17,5 @@ Second-time visitor wants to find an old prompt: lands on home-page -> pop-up as
 Registered user wants to find an old prompt: lands on home-page -> navigates to their library -> finds all saved prompts.<br>
 
 <h2>Credits</h2>
-Here you'll find assets I used, guides I followed and documentation I referenced.
+Here you'll find assets I used, guides I followed and documentation I referenced.<br>
+Django Login, Logout, Signup, Password Change and Password Reset: https://learndjango.com/tutorials/django-login-and-logout-tutorial<br>
