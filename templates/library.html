@@ -5,6 +5,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <p>Hi {{ user.username }}! Welcome to your library.</p>
+<a href="{% url 'account_email_change' %}">Change Email Address</a>
 <p><a href="{% url 'account_change_password' %}">Password Change</a></p>
 <form action="{% url 'account_logout' %}" method="post">
   {% csrf_token %}

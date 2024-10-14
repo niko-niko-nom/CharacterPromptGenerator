@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Change Email Address</h2>
+<form method="post" action=".">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Update Email</button>
+</form>
+
+{% if user.emailaddress_set.all %}
+    <h3>Existing Email Addresses</h3>
+    <ul>
+    {% for email in user.emailaddress_set.all %}
+        <li>
+            {{ email.email }} 
+            {% if email.verified %} 
+                ({{ email.primary|yesno:_("Primary,")|capfirst }} {{ _("Verified") }})
+            {% else %}
+                ({{ _("Not Verified") }})
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

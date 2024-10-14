@@ -1,9 +1,10 @@
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.shortcuts import redirect, render
-from allauth.account.views import LoginView
+from allauth.account.views import LoginView, EmailView
 from django.contrib import messages
 
 
@@ -26,3 +27,10 @@ def delete_account(request):
         return redirect(reverse('account_logout'))
     
     return render(request, "account/delete_account.html")
+
+class CustomEmailChangeView(LoginRequiredMixin, EmailView):
+    template_name = "account/email_change.html"
+
+    def form_valid(self, form):
+        form.save()
+        return redirect(reverse("account_email"))
