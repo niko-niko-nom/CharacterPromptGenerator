@@ -4,14 +4,14 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<p>Hi {{ user.username }}!</p>
+<p>Hi {{ user.username }}! Welcome to your library.</p>
 <p><a href="{% url 'account_change_password' %}">Password Change</a></p>
 <form action="{% url 'account_logout' %}" method="post">
   {% csrf_token %}
   <button type="submit">Log Out</button>
 </form>
 {% else %}
-<p>You are not logged in</p>
+<p>Please log in to access a user library.</p>
 <p><a href="{% url 'account_reset_password' %}">Password Reset</a></p>
 <p><a href="{% url 'account_login' %}">Log In</a></p>
 {% endif %}

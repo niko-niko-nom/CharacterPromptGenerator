@@ -130,7 +130,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = "home" #Change to user library later!!
+LOGIN_REDIRECT_URL = "library"
 
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 LOGOUT_REDIRECT_URL = "home"
@@ -154,3 +154,5 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_ADAPTER = "accounts.adapters.CustomAccountAdapter" #???
