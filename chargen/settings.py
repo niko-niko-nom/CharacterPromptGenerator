@@ -125,6 +125,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -155,4 +159,4 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_UNIQUE_EMAIL = True
 
-ACCOUNT_ADAPTER = "accounts.adapters.CustomAccountAdapter" #???
+ACCOUNT_ADAPTER = "accounts.adapters.CustomAccountAdapter"

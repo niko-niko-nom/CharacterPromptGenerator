@@ -2,18 +2,58 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
     <title>{% block title %}No other title given{% endblock %}</title>
   </head>
   <body>
     <header>
-      <a href="{% url "home"%}" class="btn">Home</a>
+      <a href="{% url "home" %}" class="btn">Home</a>
+      <h1 class="title bold">Untitled Character Prompt Generator</h1>
+      <div class="profile rounded dropdown">
+        <button class="dropdownButton" onclick="dropdown()">Dropdown</button>
+        <div id="dropdown" class="dropdownContent">
+          {% if user.is_authenticated %}
+          <a href="{% url "library" username=user.username %}"><div class="profileLink">Library</div></a>
+          <a href="{% url "settings" username=user.username %}"><div class="profileLink">Settings</div></a>
+          <div class="profileLink">
+            <form action="{% url "account_logout" %}" method="post">
+              {% csrf_token %}
+              <button type="submit">Log Out</button>
+            </form>
+          </div>
+        </div>
+        {% else %}
+          <a href="{% url "account_login" %}"><div class="profileLink">Sign Up|Log In</div></a>
+          <a href="{% url "account_reset_password" %}"><div class="profileLink">Recover Account</div></a>
+        {% endif %}
+      </div>
     </header>
     <main>
       {% block content %}
       {% endblock %}
     </main>
     <footer>
+      <div class="faq">
+        <h1 class="bold">Frequently Asked Questions</h1>
 
+      </div>
+      <div class="sitemap">
+        <h1 class="bold">Sitemap</h1>
+        <a href="{% url "home" %}">Home</a>
+        <a href="{% url "account_login" %}">Sign Up|Log In</a>
+        {% if user.is_authenticated %}
+        <a href="{% url "library" username=user.username %}">Library</a>
+        {% endif %}
+      </div>
+      <div class="contact">
+        <h1 class="bold">Contact Us</h1>
+
+      </div>
     </footer>
+    <script src="{% static "javascript/script.js" %}"></script>
   </body>
 </html>

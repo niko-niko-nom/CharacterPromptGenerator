@@ -7,7 +7,6 @@ from django.shortcuts import redirect, render
 from allauth.account.views import LoginView, EmailView
 from django.contrib import messages
 
-
 class SignUpView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
