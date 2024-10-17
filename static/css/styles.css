@@ -34,12 +34,11 @@ body {
     background-image: url("/static/images/apple.gif");
     background-repeat: repeat;
     background-color: var(--custom-white);
-    overflow-y: hidden;
-    overflow-x: auto;
+    overflow-x: hidden;
 }
 
 header {
-    position: absolute;
+    position: sticky;
     top: 1em;
     width: 100%;
     min-height: 4em;
@@ -52,6 +51,7 @@ header {
     background-color: var(--custom-white);
     border-bottom: 5px dotted var(--carnation-pink);
     border-top: 5px dotted var(--carnation-pink);
+    margin-bottom: 2em;
 }
 
 .homeButton {
@@ -68,11 +68,14 @@ header {
 
 main {
     min-height: calc(100vh - 4em);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: auto;
     min-height: 12vh;
@@ -84,6 +87,7 @@ footer {
     background-color: var(--custom-grey);
     border-top: 5px dotted var(--custom-white);
     text-align: center;
+    margin-top: 2em;
 }
 
 button {
@@ -219,4 +223,49 @@ a:visitied {
     border-top: 3px solid var(--ochre);
     border-right: 3px solid var(--custom-white);
     border-bottom: 3px solid var(--custom-white);
+}
+
+/* Everything in Home below here */
+.mainContent {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+#leftColumn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+#rightColumn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    width: 70%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    min-height: 50vh;
+    background-color: var(--custom-white);
 }

@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}The Ultimate Character Prompt Generator{% endblock %}
 
 {% block content %}
+<div class="mainContent">
+    <div id="leftColumn">
+        <div class="buttonContainer" id="categoryButtons">
+        </div>
+        <div class="container" id="settingsContainer">
+        </div>
+    </div>
+    <div id="rightColumn">
+        <div class="container" id="generatedPrompt">
+        </div>
+        <div class="buttonContainer" id="promptButtons">
+        </div>
+    </div>
+</div>
 {% endblock %}
