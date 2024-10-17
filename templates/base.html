@@ -10,11 +10,12 @@
     <title>{% block title %}No other title given{% endblock %}</title>
   </head>
   <body>
+
     <header>
       <a href="{% url "home" %}" class="btn">Home</a>
       <h1 class="title bold">Untitled Character Prompt Generator</h1>
-      <div class="profile rounded dropdown">
-        <button class="dropdownButton" onclick="dropdown()">Dropdown</button>
+      <div class="profile dropdown">        
+        <button class="dropdownButton pointing" onclick="dropdown()">{{ user.username }} <i class="dropdown icon">&#9662;</i></button>
         <div id="dropdown" class="dropdownContent">
           {% if user.is_authenticated %}
           <a href="{% url "library" username=user.username %}"><div class="profileLink">Library</div></a>
@@ -32,10 +33,16 @@
         {% endif %}
       </div>
     </header>
+
+    <div class="spacer"></div>
+
     <main>
       {% block content %}
       {% endblock %}
     </main>
+
+    <div class="spacer"></div>
+
     <footer>
       <div class="faq">
         <h1 class="bold">Frequently Asked Questions</h1>
@@ -54,6 +61,7 @@
 
       </div>
     </footer>
+    
     <script src="{% static "javascript/script.js" %}"></script>
   </body>
 </html>
