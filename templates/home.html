@@ -6,6 +6,9 @@
 <div class="mainContent">
     <div id="leftColumn">
         <div class="buttonContainer" id="categoryButtons">
+            {% for category in categories %}
+            <div class="categoryButton" id="{{ category }}">{{ category }}</div>
+            {% endfor %}
         </div>
         <div class="container" id="settingsContainer">
         </div>
