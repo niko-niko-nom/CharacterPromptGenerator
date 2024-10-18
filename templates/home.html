@@ -4,13 +4,30 @@
 
 {% block content %}
 <div class="mainContent">
+    {% if categories %}
+    Categories are being loaded!
+    {% else %}
+        No categories found.
+    {% endif %}
     <div id="leftColumn">
         <div class="buttonContainer" id="categoryButtons">
             {% for category in categories %}
-            <div class="categoryButton" id="{{ category }}">{{ category }}</div>
+            <div class="categoryButton" id="{{ category.name }}">
+                {{ category.name }}
+            </div>
+            <div class="container" id="settingsContainer">
+                {% for subcategory in category.subcategories.all %}
+                <div class="subcategoryColumn selectableSub">
+                    {{ subcategory }}
+                    {% for prompt in subcategory.prompts.all %}
+                    <div class="prompt selectablePrompt">
+                        {{prompt}}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
             {% endfor %}
-        </div>
-        <div class="container" id="settingsContainer">
         </div>
     </div>
     <div id="rightColumn">

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.views import LoginView, EmailView
-from .models import Category, Subcategory, Prompt
+from .models import Category
 
 class CustomLoginView(LoginView):
     def get_success_url(self):
@@ -29,15 +29,8 @@ class CustomEmailChangeView(LoginRequiredMixin, EmailView):
         return redirect(reverse("account_email"))
 
 def home(request):
-    categories = Category.objects.all()
-    subcategories = Subcategory.objects.all()
-    prompts = Prompt.objects.all()
-    return render(request, 'home.html', {
-        'categories': categories,
-        'subcategories': subcategories,
-        'prompts': prompts
-    })
+    categories = Category.objects.prefetch_related('subcategories__prompts')
 
-def prompt_view(request):
-    categories = Category.objects.prefetch_related('subcategories__prompts').order_by('order')
-    return render(request, 'home.html', {'categories': categories})
+    context = {'categories': categories}
+
+    return render(request, 'home.html', context)
