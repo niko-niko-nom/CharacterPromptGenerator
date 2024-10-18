@@ -14,8 +14,7 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['order']  # Ensure ordering by 'order' field
-
+        ordering = ['order']
 
 class Subcategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
@@ -23,11 +22,10 @@ class Subcategory(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f'{self.category.name} -> {self.name}'
+        return self.name
 
     class Meta:
-        ordering = ['order']  # Ensure ordering by 'order' field
-
+        ordering = ['order']
 
 class Prompt(models.Model):
     subcategory = models.ForeignKey(Subcategory, related_name='prompts', on_delete=models.CASCADE)
@@ -35,7 +33,33 @@ class Prompt(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f'{self.subcategory.name}: {self.text}'
+        return self.text
 
     class Meta:
-        ordering = ['order']  # Ensure ordering by 'order' field
+        ordering = ['order']
+
+class UserCategory(models.Model):
+    user = models.ForeignKey(CustomUser, related_name='userCategories', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+class UserSubcategory(models.Model):
+    user = models.ForeignKey(CustomUser, related_name='userSubCategories', on_delete=models.CASCADE)
+    category = models.ForeignKey(UserCategory, related_name='subcategories', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+class UserPrompts(models.Model):
+    user = models.ForeignKey(CustomUser, related_name='userPrompts', on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(UserSubcategory, related_name='prompts', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name

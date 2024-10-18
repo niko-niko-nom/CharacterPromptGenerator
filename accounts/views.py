@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.views import LoginView, EmailView
-from .models import Category
+from .models import Category, UserCategory
 
 class CustomLoginView(LoginView):
     def get_success_url(self):
@@ -30,7 +30,8 @@ class CustomEmailChangeView(LoginRequiredMixin, EmailView):
 
 def home(request):
     categories = Category.objects.prefetch_related('subcategories__prompts')
+    userCategories = UserCategory.objects.prefetch_related('usersubcategories__userprompts')
 
-    context = {'categories': categories}
+    context = {'categories': categories, 'userCategories': userCategories}
 
     return render(request, 'home.html', context)

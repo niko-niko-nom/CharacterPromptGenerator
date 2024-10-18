@@ -4,11 +4,6 @@
 
 {% block content %}
 <div class="mainContent">
-    {% if categories %}
-    Categories are being loaded!
-    {% else %}
-        No categories found.
-    {% endif %}
     <div id="leftColumn">
         <div class="buttonContainer" id="categoryButtons">
             {% for category in categories %}
