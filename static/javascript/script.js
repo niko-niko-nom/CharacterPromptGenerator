@@ -18,6 +18,20 @@ window.onclick = function(event) {
 }
 
 // by default only first categoryButton should be active, rest should have .ghost class
+window.onload = function() {
+  var firstCategory = document.getElementById("Species");
+  firstCategory.classList.remove("ghost");
+
+  var subcategoryColumns = document.getElementsByClassName("subcategoryColumn");
+  
+  // Loop through subcategory columns to find the one with the correct data-category attribute
+  for (var i = 0; i < subcategoryColumns.length; i++) {
+    if (subcategoryColumns[i].getAttribute("data-category") === "Species") {
+      subcategoryColumns[i].classList.replace("noShow", "show");
+    }
+  }
+}
+
 function chooseCategory(categoryId) {
   var i, categoryButton, subcategoryColumn;
   
