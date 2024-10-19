@@ -130,6 +130,9 @@ a:visitied {
     border-bottom: 3px solid var(--custom-grey);
     outline: 2px solid var(--custom-black);
     font-size: 1.5em;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .btn:hover {
@@ -200,6 +203,15 @@ a:visitied {
 
 .noShow {
     display: none !important;
+}
+
+.line {
+    height: 3px;
+    width: 100%;
+    background-color: var(--carnation-pink);
+    border-radius: 100%;
+    opacity: 0.33;
+    margin: 1em;
 }
 
 .dropdownContent.show {
@@ -290,6 +302,9 @@ a:visitied {
     border-right: 3px solid var(--custom-grey);
     border-bottom: 3px solid var(--custom-grey);
     outline: 2px solid var(--custom-black);
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .categoryButton:hover {
@@ -327,21 +342,36 @@ a:visitied {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: start;
-    gap: 1em;
+    align-items: center;
     flex-wrap: wrap;
     width: 80%;
-    min-height: 50vh;
+    min-height: 500px;
+    height: auto;
     background-color: var(--custom-white);
-    padding: 1em;
+    padding: 1.4em;
 }
 
 .subcategoryColumn {
     display: flex;
     flex-direction: column;
     justify-content: start;
+    align-items: center;
+    width: 100%;
+}
+
+.subcategoryColumn h2 {
+    margin-bottom: 0.4em;
+    font-size: 2em;
+}
+
+.promptContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
     align-items: start;
-    width: calc(100% / 3 - 2em);
+    flex-wrap: wrap;
+    gap: 0.75em;
+    width: 100%;
 }
 
 .selectablePrompt {
@@ -353,14 +383,16 @@ a:visitied {
     align-items: center;
     cursor: pointer;
     height: 3em;
-    width: 100%;
+    width: calc(100% / 3.5);
     padding: 5px;
     border-left: 3px solid var(--custom-white);
     border-top: 3px solid var(--custom-white);
     border-right: 3px solid var(--custom-grey);
     border-bottom: 3px solid var(--custom-grey);
     outline: 2px solid var(--custom-black);
-    margin-top: 0.5em;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .prompt:hover {

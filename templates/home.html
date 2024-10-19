@@ -32,13 +32,16 @@
                 <h2 class="subcategoryTitle" id="{{ subcategory }}">
                     {{ subcategory }}
                 </h2>
-                {% for prompt in subcategory.prompts.all %}
-                <div class="prompt selectablePrompt" id="{{ prompt }}" onclick="toggleSelectable('{{ prompt }}')">
-                    <h3 class="promptTitle">
-                        {{ prompt }}
-                    </h3>
+                <div class="promptContainer">
+                    {% for prompt in subcategory.prompts.all %}
+                    <div class="prompt selectablePrompt" id="{{ prompt }}" onclick="toggleSelectable('{{ prompt }}')">
+                        <h3 class="promptTitle">
+                            {{ prompt }}
+                        </h3>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+                <div class="line"></div>
             </div>
             {% endfor %}
             {% endfor %}
