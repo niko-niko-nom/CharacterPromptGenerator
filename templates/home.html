@@ -7,21 +7,29 @@
     <div id="leftColumn">
         <div class="buttonContainer" id="categoryButtons">
             {% for category in categories %}
-            <div class="categoryButton" id="{{ category.name }}">
-                {{ category.name }}
+            <div class="categoryButton ghost" id="{{ category }}" onclick="chooseCategory('{{ category }}')">
+                <h1 class="categoryTitle">
+                    {{ category }}
+                </h1>
             </div>
-            <div class="container" id="settingsContainer">
-                {% for subcategory in category.subcategories.all %}
-                <div class="subcategoryColumn selectableSub">
+            {% endfor %}
+        </div>
+        <div class="container" id="settingsContainer">
+            {% for category in categories %}
+            {% for subcategory in category.subcategories.all %}
+            <div class="subcategoryColumn selectableSub noShow" data-category="{{ category }}">
+                <h2 class="subcategoryTitle" id="{{ subcategory }}">
                     {{ subcategory }}
-                    {% for prompt in subcategory.prompts.all %}
-                    <div class="prompt selectablePrompt">
-                        {{prompt}}
-                    </div>
-                    {% endfor %}
+                </h2>
+                {% for prompt in subcategory.prompts.all %}
+                <div class="prompt selectablePrompt" id="{{ prompt }}" onclick="toggleSelectable('{{ prompt }}')">
+                    <h3 class="promptTitle">
+                        {{ prompt }}
+                    </h3>
                 </div>
                 {% endfor %}
             </div>
+            {% endfor %}
             {% endfor %}
         </div>
     </div>
