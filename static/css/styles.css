@@ -340,7 +340,6 @@ a:visitied {
     justify-content: start;
     align-items: start;
     width: calc(100% / 3 - 2em);
-    gap: 0.5em;
 }
 
 .selectablePrompt {
@@ -359,6 +358,7 @@ a:visitied {
     border-right: 3px solid var(--custom-grey);
     border-bottom: 3px solid var(--custom-grey);
     outline: 2px solid var(--custom-black);
+    margin-top: 0.5em;
 }
 
 .prompt:hover {
