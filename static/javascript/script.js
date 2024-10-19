@@ -64,7 +64,58 @@ function chooseCategory(categoryId) {
 function toggleSelectable(promptId) {
   var promptButton = document.getElementById(promptId);
   
-  if (promptButton) {
-    promptButton.classList.toggle("ghost");
-  }
+  promptButton.classList.toggle("ghost");
+
+  promptButton.offsetHeight;  // force page reload??
+}
+
+// Enter names of categories where only one prompt per subcategory is allowed
+const singleSubcategoryCategories = ['Species', 'Weapons'];
+
+function generatePrompt() {
+    let selectedPrompts = {};
+    let categories = document.querySelectorAll(".categoryButton");
+
+    categories.forEach(function(category) {
+        let categoryId = category.id;
+        let categoryName = category.textContent.trim();
+
+        // Check if the category is in the singleSubcategoryCategories array
+        if (singleSubcategoryCategories.includes(categoryName)) {
+            let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
+            let randomSubcategoryIndex = Math.floor(Math.random() * subcategories.length);
+            let selectedSubcategory = subcategories[randomSubcategoryIndex];
+
+            let prompts = selectedSubcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+            if (prompts.length > 0) {
+                let randomIndex = Math.floor(Math.random() * prompts.length);
+                let selectedPrompt = prompts[randomIndex];
+                selectedPrompts[categoryId] = selectedPrompt.textContent;
+            }
+
+        } else {
+          // regular generation
+          let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
+
+          subcategories.forEach(function(subcategory) {
+              let subcategoryId = subcategory.querySelector(".subcategoryTitle").id;
+              let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+              if (prompts.length > 0) {
+                  let randomIndex = Math.floor(Math.random() * prompts.length);
+                  let selectedPrompt = prompts[randomIndex];
+                  selectedPrompts[`${categoryId}-${subcategoryId}`] = selectedPrompt.textContent;
+              }
+          });
+        }
+    });
+
+    let outputDiv = document.getElementById("generatedPrompt");
+    outputDiv.innerHTML = '';
+
+    for (let key in selectedPrompts) {
+        let promptText = selectedPrompts[key];
+        let promptElement = document.createElement("p");
+        promptElement.textContent = promptText;
+        outputDiv.appendChild(promptElement);
+    }
 }
