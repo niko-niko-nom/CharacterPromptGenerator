@@ -241,7 +241,7 @@ a:visitied {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2px;
+    gap: 2em;
 }
 
 #leftColumn {

@@ -4,6 +4,17 @@
 
 {% block content %}
 <div class="mainContent">
+    <div class="container" id="explanationContainer">
+        <h1>
+            Choose from the categories below to get started!
+        </h1>
+        <p>
+            Prompts are categorised by type, and can be filtered by category.
+            Click on a category to view its subcategories and prompts.
+            Click on each prompt to disable or re-enable it from the generator.
+            Finally, click the "Generate Prompt" button to get a random prompt from your selected options!
+        </p>
+    </div>
     <div id="leftColumn">
         <div class="buttonContainer" id="categoryButtons">
             {% for category in categories %}
