@@ -69,53 +69,70 @@ function toggleSelectable(promptId) {
   promptButton.offsetHeight;  // force page reload??
 }
 
-// Enter names of categories where only one prompt per subcategory is allowed
+// categories where only one prompt is allowed for the whole thing
 const singleSubcategoryCategories = ['Species', 'Weapons'];
 
 function generatePrompt() {
-    let selectedPrompts = {};
-    let categories = document.querySelectorAll(".categoryButton");
+  let selectedPrompts = {};
+  let categories = document.querySelectorAll(".categoryButton");
 
-    categories.forEach(function(category) {
-        let categoryId = category.id;
-        let categoryName = category.textContent.trim();
+  categories.forEach(function(category) {
+      let categoryId = category.id;
+      let categoryName = category.textContent.trim();
 
-        // Check if the category is in the singleSubcategoryCategories array
-        if (singleSubcategoryCategories.includes(categoryName)) {
-            let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
-            let randomSubcategoryIndex = Math.floor(Math.random() * subcategories.length);
-            let selectedSubcategory = subcategories[randomSubcategoryIndex];
+      // Check if the category is in the singleSubcategoryCategories array
+      if (singleSubcategoryCategories.includes(categoryName)) {
+          let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
+          
+          // Filter subcategories to include only those with available prompts (not using ghost class)
+          let validSubcategories = Array.from(subcategories).filter(function(subcategory) {
+              let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+              return prompts.length > 0;
+          });
 
-            let prompts = selectedSubcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
-            if (prompts.length > 0) {
-                let randomIndex = Math.floor(Math.random() * prompts.length);
-                let selectedPrompt = prompts[randomIndex];
-                selectedPrompts[categoryId] = selectedPrompt.textContent;
-            }
+          // If valid subcategories are found, pick one randomly
+          if (validSubcategories.length > 0) {
+              let randomSubcategoryIndex = Math.floor(Math.random() * validSubcategories.length);
+              let selectedSubcategory = validSubcategories[randomSubcategoryIndex];
 
-        } else {
-          // regular generation
+              let prompts = selectedSubcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+              if (prompts.length > 0) {
+                  let randomIndex = Math.floor(Math.random() * prompts.length);
+                  let selectedPrompt = prompts[randomIndex];
+                  console.log("Selected prompt from a single subcategory: ", selectedPrompt.textContent);
+                  selectedPrompts[categoryId] = selectedPrompt.textContent;
+              }
+          } else {
+              console.log(`No valid prompts available in category: ${categoryName}`);
+          }
+
+      } else {
+          // For regular categories: pick one prompt from each subcategory
           let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
 
           subcategories.forEach(function(subcategory) {
               let subcategoryId = subcategory.querySelector(".subcategoryTitle").id;
               let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+              
               if (prompts.length > 0) {
                   let randomIndex = Math.floor(Math.random() * prompts.length);
                   let selectedPrompt = prompts[randomIndex];
+                  console.log("Selected prompt from subcategory: ", selectedPrompt.textContent);
                   selectedPrompts[`${categoryId}-${subcategoryId}`] = selectedPrompt.textContent;
+              } else {
+                  console.log(`No valid prompt in subcategory ${subcategoryId}`);
               }
           });
-        }
-    });
+      }
+  });
 
-    let outputDiv = document.getElementById("generatedPrompt");
-    outputDiv.innerHTML = '';
+  let outputDiv = document.getElementById("generatedPrompt");
+  outputDiv.innerHTML = '';
 
-    for (let key in selectedPrompts) {
-        let promptText = selectedPrompts[key];
-        let promptElement = document.createElement("p");
-        promptElement.textContent = promptText;
-        outputDiv.appendChild(promptElement);
-    }
+  for (let key in selectedPrompts) {
+      let promptText = selectedPrompts[key];
+      let promptElement = document.createElement("p");
+      promptElement.textContent = promptText;
+      outputDiv.appendChild(promptElement);
+  }
 }
