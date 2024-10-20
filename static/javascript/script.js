@@ -118,16 +118,30 @@ function generatePrompt() {
 
           subcategories.forEach(function(subcategory) {
               let subcategoryId = subcategory.querySelector(".subcategoryTitle").id;
-              let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
-              
+              let selectablePrompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+              let prompts = Array.from(selectablePrompts).map(prompt => prompt.id);
+            
+              console.log(prompts);
+
               if (prompts.length > 0) {
-                  let randomIndex = Math.floor(Math.random() * prompts.length);
-                  let selectedPrompt = prompts[randomIndex];
-                  console.log("Selected prompt from subcategory: ", selectedPrompt.textContent);
-                  selectedPrompts[`${categoryId}-${subcategoryId}`] = selectedPrompt.textContent;
-              } else {
-                  //console.log(`No valid prompt in subcategory ${subcategoryId}`);
-              }
+                const probabilityDivs = document.querySelectorAll(`.probability_${subcategoryId.trim().replace(/\s/g, '')}`);
+
+                console.log(subcategoryId);
+                console.log(probabilityDivs);
+
+                const probabilities = [];
+                
+                probabilityDivs.forEach(div => {
+                probabilities.push(div.innerHTML);
+              });
+              console.log(probabilities);
+
+              let selectedPrompt = weightedRandomChoices(prompts, probabilities);
+              console.log("Selected prompt from subcategory: ", selectedPrompt);
+              selectedPrompts[`${categoryId}-${subcategoryId}`] = selectedPrompt;
+            } else {
+                //console.log(`No valid prompt in subcategory ${subcategoryId}`);
+            }
           });
       }
   });
