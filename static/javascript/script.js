@@ -82,29 +82,37 @@ function generatePrompt() {
 
       // Check if the category is in the singleSubcategoryCategories array
       if (singleSubcategoryCategories.includes(categoryName)) {
-          let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
-          
-          // Filter subcategories to include only those with available prompts (not using ghost class)
-          let validSubcategories = Array.from(subcategories).filter(function(subcategory) {
-              let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
-              return prompts.length > 0;
-          });
+        let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
+        
+        // Filter subcategories to include only those with available prompts (not using ghost class)
+        let validSubcategories = Array.from(subcategories).filter(function(subcategory) {
+          let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+          return prompts.length > 0;
+        });
 
-          // If valid subcategories are found, pick one randomly
-          if (validSubcategories.length > 0) {
-              let randomSubcategoryIndex = Math.floor(Math.random() * validSubcategories.length);
-              let selectedSubcategory = validSubcategories[randomSubcategoryIndex];
+        // If valid subcategories are found, pick one randomly
+        if (validSubcategories.length > 0) {
+          let randomSubcategoryIndex = Math.floor(Math.random() * validSubcategories.length);
+          let selectedSubcategory = validSubcategories[randomSubcategoryIndex];
 
-              let prompts = selectedSubcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
-              if (prompts.length > 0) {
-                  let randomIndex = Math.floor(Math.random() * prompts.length);
-                  let selectedPrompt = prompts[randomIndex];
-                  console.log("Selected prompt from a single subcategory: ", selectedPrompt.textContent);
-                  selectedPrompts[categoryId] = selectedPrompt.textContent;
-              }
-          } else {
-              console.log(`No valid prompts available in category: ${categoryName}`);
+          let selectablePrompts = selectedSubcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
+          let prompts = Array.from(selectablePrompts).map(prompt => prompt.id);
+          if (prompts.length > 0) { // TODO: remove if statement and test later
+            const probabilityDivs = document.querySelectorAll(`.probability_${categoryName}`);
+            const probabilities = [];
+
+            probabilityDivs.forEach(div => {
+              probabilities.push(div.innerHTML);
+            });
+
+            let selectedPrompt = weightedRandomChoices(prompts, probabilities);
+            console.log("Selected prompt from a single subcategory: ", selectedPrompt);
+            selectedPrompts[categoryId] = selectedPrompt;
+            console.log("Updated selectedPrompts: ", selectedPrompts);
           }
+        } else {
+            //console.log(`No valid prompts available in category: ${categoryName}`);
+        }
 
       } else {
           // For regular categories: pick one prompt from each subcategory
@@ -120,7 +128,7 @@ function generatePrompt() {
                   console.log("Selected prompt from subcategory: ", selectedPrompt.textContent);
                   selectedPrompts[`${categoryId}-${subcategoryId}`] = selectedPrompt.textContent;
               } else {
-                  console.log(`No valid prompt in subcategory ${subcategoryId}`);
+                  //console.log(`No valid prompt in subcategory ${subcategoryId}`);
               }
           });
       }
@@ -136,6 +144,31 @@ function generatePrompt() {
       outputDiv.appendChild(promptElement);
   }
 }
+
+function weightedRandomChoices(prompts, probabilities) {
+  let total = 0;
+
+  // conver the probabilities to integers
+  let probabilitiesArray = probabilities.map(str => +str);
+
+  for (let i = 0; i < probabilitiesArray.length; i++) {
+    total += probabilitiesArray[i];
+  }
+
+  for (let i = 0; i < probabilitiesArray.length; i++) {
+    probabilitiesArray[i] /= total;
+  }
+
+  let randomNumber = Math.random();
+  let cumulativeProbability = 0;
+
+  for (let i = 0; i < prompts.length; i++) {
+    cumulativeProbability += probabilitiesArray[i];
+    if (randomNumber < cumulativeProbability) {
+      return prompts[i];
+    }
+  }
+};
 
 document.querySelectorAll('.probabilityUp').forEach(function(upButton) {
   upButton.addEventListener('click', function() {
