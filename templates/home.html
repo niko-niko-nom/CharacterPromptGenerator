@@ -34,10 +34,85 @@
                 </h2>
                 <div class="promptContainer">
                     {% for prompt in subcategory.prompts.all %}
-                    <div class="prompt selectablePrompt" id="{{ prompt }}" onclick="toggleSelectable('{{ prompt }}')">
-                        <h3 class="promptTitle">
-                            {{ prompt }}
-                        </h3>
+                    <div class="secondPromptContainer">
+                        <div class="prompt selectablePrompt" id="{{ prompt }}" onclick="toggleSelectable('{{ prompt }}')">
+                            <h3 class="promptTitle">
+                                {{ prompt }}
+                            </h3>
+                        </div>
+                        <div class="probabilityContainer">
+                            <div class="probabilityDown">
+                                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 400 400" id="Send" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                                <g id="XMLID_3_">
+                                
+                                <polygon id="XMLID_4_" points="373.3,0 346.7,0 320,0 320,26.7 346.7,26.7 373.3,26.7 373.3,53.3 373.3,80 400,80 400,53.3    400,26.7 400,0  "/>
+                                
+                                <polygon id="XMLID_299_" points="293.3,53.3 320,53.3 320,26.7 293.3,26.7 266.7,26.7 240,26.7 240,53.3 266.7,53.3  "/>
+                                
+                                <polygon id="XMLID_300_" points="213.3,80 240,80 240,53.3 213.3,53.3 186.7,53.3 160,53.3 160,80 186.7,80  "/>
+                                
+                                <polygon id="XMLID_301_" points="133.3,106.7 160,106.7 160,80 133.3,80 106.7,80 80,80 80,106.7 106.7,106.7  "/>
+                                
+                                <polygon id="XMLID_302_" points="346.7,106.7 346.7,133.3 346.7,160 373.3,160 373.3,133.3 373.3,106.7 373.3,80 346.7,80  "/>
+                                
+                                <polygon id="XMLID_313_" points="80,133.3 80,106.7 53.3,106.7 26.7,106.7 26.7,133.3 53.3,133.3  "/>
+                                
+                                <rect height="26.7" id="XMLID_314_" width="26.7" x="0" y="133.3"/>
+                                
+                                <polygon id="XMLID_315_" points="186.7,160 160,160 133.3,160 106.7,160 80,160 53.3,160 26.7,160 26.7,186.7 53.3,186.7 80,186.7    106.7,186.7 133.3,186.7 160,186.7 186.7,186.7 213.3,186.7 213.3,160  "/>
+                                
+                                <polygon id="XMLID_316_" points="320,186.7 320,213.3 320,240 346.7,240 346.7,213.3 346.7,186.7 346.7,160 320,160  "/>
+                                
+                                <polygon id="XMLID_317_" points="293.3,266.7 293.3,293.3 293.3,320 320,320 320,293.3 320,266.7 320,240 293.3,240  "/>
+                                
+                                <polygon id="XMLID_318_" points="240,320 240,293.3 240,266.7 240,240 240,213.3 240,186.7 213.3,186.7 213.3,213.3 213.3,240    213.3,266.7 213.3,293.3 213.3,320 213.3,346.7 213.3,373.3 240,373.3 240,346.7  "/>
+                                
+                                <polygon id="XMLID_319_" points="266.7,346.7 266.7,373.3 293.3,373.3 293.3,346.7 293.3,320 266.7,320  "/>
+                                
+                                <rect height="26.7" id="XMLID_320_" width="26.7" x="240" y="373.3"/>
+                                
+                                </g>
+                                
+                                </svg>
+                            </div>
+                            <div class="probabilityDisplay bold">{{ prompt.probability }}</div>
+                            <div class="probabilityUp">
+                                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 400 400" id="Send" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                                    <g id="XMLID_3_">
+                                    
+                                    <polygon id="XMLID_4_" points="373.3,0 346.7,0 320,0 320,26.7 346.7,26.7 373.3,26.7 373.3,53.3 373.3,80 400,80 400,53.3    400,26.7 400,0  "/>
+                                    
+                                    <polygon id="XMLID_299_" points="293.3,53.3 320,53.3 320,26.7 293.3,26.7 266.7,26.7 240,26.7 240,53.3 266.7,53.3  "/>
+                                    
+                                    <polygon id="XMLID_300_" points="213.3,80 240,80 240,53.3 213.3,53.3 186.7,53.3 160,53.3 160,80 186.7,80  "/>
+                                    
+                                    <polygon id="XMLID_301_" points="133.3,106.7 160,106.7 160,80 133.3,80 106.7,80 80,80 80,106.7 106.7,106.7  "/>
+                                    
+                                    <polygon id="XMLID_302_" points="346.7,106.7 346.7,133.3 346.7,160 373.3,160 373.3,133.3 373.3,106.7 373.3,80 346.7,80  "/>
+                                    
+                                    <polygon id="XMLID_313_" points="80,133.3 80,106.7 53.3,106.7 26.7,106.7 26.7,133.3 53.3,133.3  "/>
+                                    
+                                    <rect height="26.7" id="XMLID_314_" width="26.7" x="0" y="133.3"/>
+                                    
+                                    <polygon id="XMLID_315_" points="186.7,160 160,160 133.3,160 106.7,160 80,160 53.3,160 26.7,160 26.7,186.7 53.3,186.7 80,186.7    106.7,186.7 133.3,186.7 160,186.7 186.7,186.7 213.3,186.7 213.3,160  "/>
+                                    
+                                    <polygon id="XMLID_316_" points="320,186.7 320,213.3 320,240 346.7,240 346.7,213.3 346.7,186.7 346.7,160 320,160  "/>
+                                    
+                                    <polygon id="XMLID_317_" points="293.3,266.7 293.3,293.3 293.3,320 320,320 320,293.3 320,266.7 320,240 293.3,240  "/>
+                                    
+                                    <polygon id="XMLID_318_" points="240,320 240,293.3 240,266.7 240,240 240,213.3 240,186.7 213.3,186.7 213.3,213.3 213.3,240    213.3,266.7 213.3,293.3 213.3,320 213.3,346.7 213.3,373.3 240,373.3 240,346.7  "/>
+                                    
+                                    <polygon id="XMLID_319_" points="266.7,346.7 266.7,373.3 293.3,373.3 293.3,346.7 293.3,320 266.7,320  "/>
+                                    
+                                    <rect height="26.7" id="XMLID_320_" width="26.7" x="240" y="373.3"/>
+                                    
+                                    </g>
+                                    
+                                    </svg>
+                            </div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -53,7 +128,68 @@
         <div class="buttonContainer" id="promptButtons">
             <div class="btn" id="generateButton" onclick="generatePrompt()">Generate Prompt</div>
             {% if user.is_authenticated %}
-            <div class="btn" id="saveButton" onclick="savePrompt()">Save Prompt</div>
+            <div class="btn" id="saveButton" onclick="savePrompt()">
+                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 400 400" id="Heart" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                    <g id="XMLID_20_">
+                    
+                    <polygon id="XMLID_21_" points="133.3,40 133.3,13.3 106.7,13.3 80,13.3 80,40 106.7,40  "/>
+                    
+                    <polygon id="XMLID_186_" points="320,40 320,13.3 293.3,13.3 266.7,13.3 266.7,40 293.3,40  "/>
+                    
+                    <rect height="26.7" id="XMLID_187_" width="26.7" x="53.3" y="40"/>
+                    
+                    <rect height="26.7" id="XMLID_188_" width="26.7" x="133.3" y="40"/>
+                    
+                    <rect height="26.7" id="XMLID_189_" width="26.7" x="240" y="40"/>
+                    
+                    <rect height="26.7" id="XMLID_190_" width="26.7" x="320" y="40"/>
+                    
+                    <rect height="26.7" id="XMLID_191_" width="26.7" x="26.7" y="66.7"/>
+                    
+                    <rect height="26.7" id="XMLID_192_" width="26.7" x="160" y="66.7"/>
+                    
+                    <rect height="26.7" id="XMLID_193_" width="26.7" x="213.3" y="66.7"/>
+                    
+                    <rect height="26.7" id="XMLID_194_" width="26.7" x="346.7" y="66.7"/>
+                    
+                    <rect height="26.7" id="XMLID_195_" width="26.7" x="186.7" y="93.3"/>
+                    
+                    <polygon id="XMLID_196_" points="373.3,93.3 373.3,120 373.3,146.7 373.3,173.3 373.3,200 400,200 400,173.3 400,146.7 400,120    400,93.3  "/>
+                    
+                    <polygon id="XMLID_197_" points="26.7,146.7 26.7,120 26.7,93.3 0,93.3 0,120 0,146.7 0,173.3 0,200 26.7,200 26.7,173.3  "/>
+                    
+                    <rect height="26.7" id="XMLID_198_" width="26.7" x="26.7" y="200"/>
+                    
+                    <rect height="26.7" id="XMLID_199_" width="26.7" x="346.7" y="200"/>
+                    
+                    <rect height="26.7" id="XMLID_200_" width="26.7" x="53.3" y="226.7"/>
+                    
+                    <rect height="26.7" id="XMLID_201_" width="26.7" x="320" y="226.7"/>
+                    
+                    <rect height="26.7" id="XMLID_202_" width="26.7" x="80" y="253.3"/>
+                    
+                    <rect height="26.7" id="XMLID_203_" width="26.7" x="293.3" y="253.3"/>
+                    
+                    <rect height="26.7" id="XMLID_204_" width="26.7" x="106.7" y="280"/>
+                    
+                    <rect height="26.7" id="XMLID_205_" width="26.7" x="266.7" y="280"/>
+                    
+                    <rect height="26.7" id="XMLID_206_" width="26.7" x="133.3" y="306.7"/>
+                    
+                    <rect height="26.7" id="XMLID_207_" width="26.7" x="240" y="306.7"/>
+                    
+                    <rect height="26.7" id="XMLID_208_" width="26.7" x="160" y="333.3"/>
+                    
+                    <rect height="26.7" id="XMLID_209_" width="26.7" x="213.3" y="333.3"/>
+                    
+                    <rect height="26.7" id="XMLID_210_" width="26.7" x="186.7" y="360"/>
+                    
+                    </g>
+                    
+                    </svg>
+                Save Prompt
+            </div>
             {% endif %}
         </div>
     </div>

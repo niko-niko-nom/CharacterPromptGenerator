@@ -143,6 +143,11 @@ a:visitied {
     border-top: 3px solid var(--fairy-tale);
     border-right: 3px solid var(--thistle);
     border-bottom: 3px solid var(--thistle);
+    fill: var(--custom-white);
+}
+
+.btn:hover svg {
+    fill: var(--custom-white);
 }
 
 .btn:active {
@@ -194,7 +199,7 @@ a:visitied {
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .show {
@@ -370,11 +375,20 @@ a:visitied {
     justify-content: start;
     align-items: start;
     flex-wrap: wrap;
-    gap: 0.75em;
     width: 100%;
+    gap: 2%;
 }
 
-.selectablePrompt {
+.secondPromptContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    width: calc(98% / 2);
+    margin-bottom: 1em;
+}
+
+.prompt {
     background-color: var(--custom-grey);
     color: var(--custom-black);
     text-decoration: none;
@@ -383,8 +397,9 @@ a:visitied {
     align-items: center;
     cursor: pointer;
     height: 3em;
-    width: calc(100% / 3.5);
+    width: 100%;
     padding: 5px;
+    margin-right: 1em;
     border-left: 3px solid var(--custom-white);
     border-top: 3px solid var(--custom-white);
     border-right: 3px solid var(--custom-grey);
@@ -410,4 +425,40 @@ a:visitied {
     border-top: 3px solid var(--thistle);
     border-right: 3px solid var(--fairy-tale);
     border-bottom: 3px solid var(--fairy-tale);
+}
+
+.probabilityContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.probabilityDown {
+    transform: translateY(0px) rotate(135deg);
+}
+
+.probabilityUp {
+    transform: translateY(11px) rotate(-45deg);
+}
+
+.probabilityDown svg, .probabilityUp svg {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+}
+
+.probabilityDown svg:hover, .probabilityUp svg:hover {
+    fill: var(--carnation-pink);
+}
+
+.probabilityDisplay {
+    font-size: 1.2em;
+}
+
+#saveButton svg {
+    height: 1em;
+    width: 1em;
+    margin-right: 0.5em;
 }
