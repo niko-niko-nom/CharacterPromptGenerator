@@ -31,6 +31,7 @@ class Prompt(models.Model):
     subcategory = models.ForeignKey(Subcategory, related_name='prompts', on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
     order = models.PositiveIntegerField(default=0)
+    probability = models.FloatField(default=1.0)
 
     def __str__(self):
         return self.text
@@ -60,6 +61,7 @@ class UserPrompts(models.Model):
     subcategory = models.ForeignKey(UserSubcategory, related_name='prompts', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     order = models.PositiveIntegerField(default=0)
+    probability = models.FloatField(default=1.0)
 
     def __str__(self):
         return self.name
