@@ -14,4 +14,5 @@ urlpatterns = [
     path('account/change-email/', CustomEmailChangeView.as_view(), name='account_email_change'),
     path("accounts/", include("allauth.urls")),
     path('delete-account/', views.delete_account, name='delete_account'),
+    path("update-probability/", views.updateProbability, name="update-probability"),
 ]

@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.views import LoginView, EmailView
-from .models import Category, UserCategory
+from .models import Category, UserCategory, Prompt
 
 class CustomLoginView(LoginView):
     def get_success_url(self):
@@ -35,3 +37,17 @@ def home(request):
     context = {'categories': categories, 'userCategories': userCategories}
 
     return render(request, 'home.html', context)
+
+@login_required
+@require_POST
+def updateProbability(request):
+    prompt_text = request.POST.get('prompt_id')
+    new_probability = request.POST.get('probability')
+
+    try:
+        prompt = Prompt.objects.get(text=prompt_text, user=request.user)
+        prompt.probability = float(new_probability)
+        prompt.save()
+        return JsonResponse({'status': 'success'})
+    except Prompt.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Prompt not found'}, status=404)

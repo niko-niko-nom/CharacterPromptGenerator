@@ -136,3 +136,61 @@ function generatePrompt() {
       outputDiv.appendChild(promptElement);
   }
 }
+
+document.querySelectorAll('.probabilityUp').forEach(function(upButton) {
+  upButton.addEventListener('click', function() {
+      var promptId = this.parentElement.parentElement.querySelector('.prompt').id;
+      updateProbability(promptId, 0.1);
+  });
+});
+
+document.querySelectorAll('.probabilityDown').forEach(function(downButton) {
+  downButton.addEventListener('click', function() {
+      var promptId = this.parentElement.parentElement.querySelector('.prompt').id;
+      updateProbability(promptId, -0.1);
+  });
+});
+
+function updateProbability(promptId, increment) {
+  var probabilityDisplay = document.getElementById(`probabilityDisplay-${promptId}`);
+  var currentProbability = parseFloat(probabilityDisplay.textContent);
+
+  var newProbability = Math.min(1, Math.max(0.1, currentProbability + increment));
+
+  probabilityDisplay.textContent = newProbability.toFixed(1);
+
+  // Learn more about AJAX later :)
+  fetch('/update-probability/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRFToken': getCookie('csrftoken'),  // Include CSRF token for security
+    },
+    body: `prompt_id=${encodeURIComponent(promptId)}&probability=${newProbability}`
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status !== 'success') {
+          alert('Failed to update probability: ' + data.message);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      let cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
