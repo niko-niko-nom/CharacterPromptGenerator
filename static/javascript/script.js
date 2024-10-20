@@ -106,9 +106,7 @@ function generatePrompt() {
             });
 
             let selectedPrompt = weightedRandomChoices(prompts, probabilities);
-            console.log("Selected prompt from a single subcategory: ", selectedPrompt);
             selectedPrompts[categoryId] = selectedPrompt;
-            console.log("Updated selectedPrompts: ", selectedPrompts);
           }
         } else {
             //console.log(`No valid prompts available in category: ${categoryName}`);
