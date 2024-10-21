@@ -8,6 +8,7 @@
 :root {
     --btn-height: 2em;
     --min-btn-width: 4em;
+    --border-radius: 5px;
     --custom-white: #ededed;
     --custom-grey: #cccccc;
     --custom-black: #2b2b2b;
@@ -354,6 +355,7 @@ a:visitied {
     height: auto;
     background-color: var(--custom-white);
     padding: 1.4em;
+    border-radius: var(--border-radius);
 }
 
 .subcategoryColumn {
@@ -396,7 +398,7 @@ a:visitied {
     color: var(--custom-black);
     text-decoration: none;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     cursor: pointer;
     height: 3em;
@@ -428,6 +430,53 @@ a:visitied {
     border-top: 3px solid var(--thistle);
     border-right: 3px solid var(--fairy-tale);
     border-bottom: 3px solid var(--fairy-tale);
+}
+
+.tooltipIcon {
+    position: relative;
+}
+
+.tooltipIcon svg {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+}
+
+.tooltipIcon svg:hover {
+    fill: var(--custom-white);
+}
+
+.tooltipIcon .tooltipText {
+    width: 320px;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -160px;
+    background-color: var(--thistle);
+    color: var(--custom-white);
+    text-align: start;
+    padding: 5px;
+    border-radius: var(--border-radius);
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    transform: translateY(-8px);
+}
+
+.tooltipIcon:hover .tooltipText{
+    opacity: 1;
+}
+
+.tooltipIcon .tooltipText::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--thistle) transparent transparent transparent;
 }
 
 .probabilityContainer {
