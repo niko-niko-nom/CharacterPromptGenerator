@@ -366,9 +366,22 @@ a:visitied {
     width: 100%;
 }
 
-.subcategoryColumn h2 {
+.subcategoryTitleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    gap: 1em;
+}
+
+.subcategoryTitleContainer h2 {
     margin-bottom: 0.4em;
     font-size: 2em;
+}
+
+.subcategoryTitleContainer svg:hover {
+    fill: var(--carnation-pink) !important;
 }
 
 .promptContainer {
