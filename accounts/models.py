@@ -20,6 +20,7 @@ class Subcategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     order = models.PositiveIntegerField(default=0)
+    explanation = models.CharField(max_length=500, default="No information has been entered (yet).")
 
     def __str__(self):
         return self.name
@@ -33,6 +34,7 @@ class Prompt(models.Model):
     order = models.PositiveIntegerField(default=0)
     probability = models.FloatField(default=1.0)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default="1")
+    explanation = models.CharField(max_length=500, default="No information has been entered (yet).")
 
     def __str__(self):
         return self.text
