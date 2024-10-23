@@ -522,6 +522,22 @@ a:visitied {
     font-size: 1.2em;
 }
 
+table {
+    width: 60%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--carnation-pink);
+    text-align: center;
+}
+
+tr:hover {
+    background-color: var(--fairy-tale);
+}
+
 #saveButton svg {
     height: 1em;
     width: 1em;

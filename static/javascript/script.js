@@ -70,7 +70,7 @@ function toggleSelectable(promptId) {
 }
 
 // categories where only one prompt is allowed for the whole thing
-const singleSubcategoryCategories = ['Species', 'Weapons'];
+const singleSubcategoryCategories = ['Species', 'Weapons', 'Religion'];
 
 function generatePrompt() {
   let selectedPrompts = {};
@@ -146,15 +146,31 @@ function generatePrompt() {
       }
   });
 
-  let outputDiv = document.getElementById("generatedPrompt");
-  outputDiv.innerHTML = '';
+  let outputDiv = document.getElementById("generatedPromptContainer");
+  outputDiv.innerHTML = '';  // Clear previous output
+
+  let table = document.createElement("table");
+
+  let header = table.insertRow();
+  let headerSubcategory = document.createElement("th");
+  headerSubcategory.textContent = "Subcategory";
+  let headerPrompt = document.createElement("th");
+  headerPrompt.textContent = "Selected Prompt";
+  header.appendChild(headerSubcategory);
+  header.appendChild(headerPrompt);
 
   for (let key in selectedPrompts) {
-      let promptText = selectedPrompts[key];
-      let promptElement = document.createElement("p");
-      promptElement.textContent = promptText;
-      outputDiv.appendChild(promptElement);
+    let promptText = selectedPrompts[key];
+    let row = table.insertRow();
+
+    let subcategoryCell = row.insertCell(0);
+    subcategoryCell.textContent = key.split('-')[1] || key;
+
+    let promptCell = row.insertCell(1);
+    promptCell.textContent = promptText;
   }
+
+  outputDiv.appendChild(table);
 }
 
 function weightedRandomChoices(prompts, probabilities) {
