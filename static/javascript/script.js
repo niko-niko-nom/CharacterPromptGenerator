@@ -76,38 +76,27 @@ function generatePrompt() {
   let selectedPrompts = {};
   let categories = document.querySelectorAll(".categoryButton");
 
-  console.log("Categories found:", categories); // Log available categories
-
   categories.forEach(function(category) {
       let categoryId = category.id;
       let categoryName = category.textContent.trim();
-      console.log("Current category:", categoryName); // Log each category
 
       // Check if the category is in the singleSubcategoryCategories array
       if (singleSubcategoryCategories.includes(categoryName)) {
-        console.log(`Category ${categoryName} is a single-subcategory category`);
-
         let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
-        console.log(`Subcategories for ${categoryName}:`, subcategories); // Log subcategories
 
         // Filter subcategories to include only those with available prompts (not using ghost class)
         let validSubcategories = Array.from(subcategories).filter(function(subcategory) {
           let prompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
-          console.log(`Prompts for subcategory ${subcategory.getAttribute("data-category")}:`, prompts); // Log prompts in each subcategory
           return prompts.length > 0;
         });
-
-        console.log(`Valid subcategories for ${categoryName}:`, validSubcategories); // Log valid subcategories
 
         // If valid subcategories are found, pick one randomly
         if (validSubcategories.length > 0) {
           let randomSubcategoryIndex = Math.floor(Math.random() * validSubcategories.length);
           let selectedSubcategory = validSubcategories[randomSubcategoryIndex];
-          console.log("Selected subcategory:", selectedSubcategory); // Log selected subcategory
         
           let selectablePrompts = selectedSubcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
           let prompts = Array.from(selectablePrompts).map(prompt => prompt.id);
-          console.log("Available prompts:", prompts); // Log available prompts
         
           if (prompts.length > 0) {
             // Select probability divs only for the prompts within the selected subcategory
@@ -119,48 +108,33 @@ function generatePrompt() {
               probabilities.push(div.innerHTML);
             });
         
-            console.log("Probabilities for the selected subcategory:", probabilities); // Log probabilities
-        
             let selectedPrompt = weightedRandomChoices(prompts, probabilities);
-            console.log("Selected prompt:", selectedPrompt); // Log the selected prompt
             selectedPrompts[categoryId] = selectedPrompt;
           }
         } else {
-          console.log(`No valid prompts available in category: ${categoryName}`); // Log if no valid prompts are found
+          console.log(`No valid prompts available in category: ${categoryName}`);
         }
-        
-
       } else {
-          console.log(`Category ${categoryName} is a regular category`);
-
           // For regular categories: pick one prompt from each subcategory
           let subcategories = document.querySelectorAll(`.subcategoryColumn[data-category='${categoryId}']`);
-          console.log(`Subcategories for ${categoryName}:`, subcategories); // Log subcategories
-
           subcategories.forEach(function(subcategory) {
               let subcategoryId = subcategory.querySelector(".subcategoryTitle").id;
-              console.log("Current subcategory:", subcategoryId); // Log each subcategory
 
               let selectablePrompts = subcategory.querySelectorAll(".selectablePrompt:not(.ghost)");
               let prompts = Array.from(selectablePrompts).map(prompt => prompt.id);
-              console.log(`Prompts in subcategory ${subcategoryId}:`, prompts); // Log available prompts
 
               if (prompts.length > 0) {
                 const probabilityDivs = document.querySelectorAll(`.probability_${subcategoryId.trim().replace(/\s/g, '')}`);
-                console.log(`Probability divs for ${subcategoryId}:`, probabilityDivs); // Log probability divs
 
                 const probabilities = [];
                 probabilityDivs.forEach(div => {
                   probabilities.push(div.innerHTML);
                 });
 
-                console.log("Probabilities:", probabilities); // Log probabilities
-
                 let selectedPrompt = weightedRandomChoices(prompts, probabilities);
-                console.log("Selected prompt:", selectedPrompt); // Log selected prompt
                 selectedPrompts[`${categoryId}-${subcategoryId}`] = selectedPrompt;
               } else {
-                console.log(`No valid prompts in subcategory ${subcategoryId}`); // Log if no valid prompts in subcategory
+                console.log(`No valid prompts in subcategory ${subcategoryId}`);
               }
           });
       }
@@ -187,12 +161,84 @@ function generatePrompt() {
     subcategoryCell.textContent = key.split('-')[1] || key;
 
     let promptCell = row.insertCell(1);
-    promptCell.textContent = promptText;
-  }
 
+    // Get the explanation from the selectablePrompt's data attribute
+    let explanation = document.getElementById(promptText).getAttribute('data-explanation');
+
+    // Create a documentFragment to hold the prompt text and tooltip
+    let fragment = document.createDocumentFragment();
+
+    // Create the prompt text element
+    let promptTextNode = document.createTextNode(promptText);
+    fragment.appendChild(promptTextNode);  // Append the prompt text first
+
+    // Add the tooltip container for each prompt
+    let tooltipContainer = document.createElement('div');
+    tooltipContainer.classList.add('tooltipIcon');
+    
+    // Add the SVG icon
+    let svgIcon = `
+      <svg fill="#000000" width="800px" height="800px" viewBox="0 0 400 400" id="Search" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+      <g id="XMLID_14_">
+
+      <polygon id="XMLID_15_" points="160,26.7 186.7,26.7 213.3,26.7 213.3,0 186.7,0 160,0 133.3,0 106.7,0 106.7,26.7 133.3,26.7  "/>
+
+      <polygon id="XMLID_126_" points="106.7,53.3 106.7,26.7 80,26.7 53.3,26.7 53.3,53.3 80,53.3  "/>
+
+      <polygon id="XMLID_127_" points="240,53.3 266.7,53.3 266.7,26.7 240,26.7 213.3,26.7 213.3,53.3  "/>
+
+      <polygon id="XMLID_128_" points="53.3,80 53.3,53.3 26.7,53.3 26.7,80 26.7,106.7 53.3,106.7  "/>
+
+      <polygon id="XMLID_130_" points="266.7,106.7 293.3,106.7 293.3,80 293.3,53.3 266.7,53.3 266.7,80  "/>
+
+      <rect height="26.7" id="XMLID_131_" width="26.7" x="80" y="106.7"/>
+
+      <rect height="26.7" id="XMLID_132_" width="26.7" x="106.7" y="80"/>
+
+      <polygon id="XMLID_133_" points="293.3,160 293.3,186.7 293.3,213.3 320,213.3 320,186.7 320,160 320,133.3 320,106.7 293.3,106.7    293.3,133.3  "/>
+
+      <polygon id="XMLID_134_" points="26.7,160 26.7,133.3 26.7,106.7 0,106.7 0,133.3 0,160 0,186.7 0,213.3 26.7,213.3 26.7,186.7     "/>
+
+      <polygon id="XMLID_135_" points="53.3,213.3 26.7,213.3 26.7,240 26.7,266.7 53.3,266.7 53.3,240  "/>
+
+      <polygon id="XMLID_136_" points="293.3,240 293.3,213.3 266.7,213.3 266.7,240 266.7,266.7 293.3,266.7  "/>
+
+      <polygon id="XMLID_137_" points="80,266.7 53.3,266.7 53.3,293.3 80,293.3 106.7,293.3 106.7,266.7  "/>
+
+      <polygon id="XMLID_138_" points="213.3,266.7 213.3,293.3 240,293.3 266.7,293.3 266.7,266.7 240,266.7  "/>
+
+      <polygon id="XMLID_139_" points="160,293.3 133.3,293.3 106.7,293.3 106.7,320 133.3,320 160,320 186.7,320 213.3,320 213.3,293.3    186.7,293.3  "/>
+
+      <rect height="26.7" id="XMLID_140_" width="26.7" x="293.3" y="293.3"/>
+
+      <rect height="26.7" id="XMLID_141_" width="26.7" x="320" y="320"/>
+
+      <rect height="26.7" id="XMLID_142_" width="26.7" x="346.7" y="346.7"/>
+
+      <rect height="26.7" id="XMLID_143_" width="26.7" x="373.3" y="373.3"/>
+
+      </g>
+
+      </svg>
+      `;
+      tooltipContainer.innerHTML = svgIcon;
+  
+      // Add the tooltip text
+      let tooltipText = document.createElement('span');
+      tooltipText.classList.add('tooltipText');
+      tooltipText.textContent = explanation || "No explanation available";  // Set the explanation
+      tooltipContainer.appendChild(tooltipText);
+  
+      // Append the tooltip to the fragment
+      fragment.appendChild(tooltipContainer);
+  
+      // Append the fragment to the prompt cell
+      promptCell.appendChild(fragment);
+    }
+  
   outputDiv.appendChild(table);
 }
-
 
 function weightedRandomChoices(prompts, probabilities) {
   let total = 0;
