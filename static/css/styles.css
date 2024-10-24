@@ -535,7 +535,7 @@ th, td {
 }
 
 tr:hover {
-    background-color: var(--fairy-tale);
+    background-color: var(--custom-grey);
 }
 
 #saveButton svg {
