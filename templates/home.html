@@ -29,7 +29,7 @@
             {% for category in categories %}
             {% for subcategory in category.subcategories.all %}
             {% csrf_token %}
-            <div class="subcategoryColumn selectableSub noShow" data-category="{{ category }}">
+            <div class="subcategoryColumn selectableSub noShow" data-category="{{ category|cut:" " }}">
                 <div class="subcategoryTitleContainer">
                     <h2 class="subcategoryTitle" id="{{ subcategory }}">
                         {{ subcategory }}
@@ -176,7 +176,7 @@
                                 
                                 </svg>
                             </div>
-                            <div class="probabilityDisplay probability_{{ category }} probability_{{ subcategory|cut:" " }} bold" id="probabilityDisplay-{{ prompt }}">{{ prompt.probability }}</div>
+                            <div class="probabilityDisplay probability_{{ category|cut:" " }} probability_{{ subcategory|cut:" " }} bold" id="probabilityDisplay-{{ prompt|cut:" " }}">{{ prompt.probability }}</div>
                             <div class="probabilityUp">
                                 <svg fill="#000000" width="800px" height="800px" viewBox="0 0 400 400" id="Send" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
